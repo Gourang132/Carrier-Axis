@@ -1,0 +1,155 @@
+╔══════════════════════════════════════════════════════╗
+║     CAREERAXIS — DEPLOY IN 10 MINUTES                ║
+║     Step by step. Follow exactly.                    ║
+╚══════════════════════════════════════════════════════╝
+
+WHAT YOU NEED BEFORE STARTING:
+  1. A GitHub account (free) — github.com
+  2. A Vercel account (free) — vercel.com
+  3. Your Anthropic API key — console.anthropic.com
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1 — GET YOUR API KEY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open: console.anthropic.com
+2. Sign up or log in
+3. Click "API Keys" in the left menu
+4. Click "Create Key"
+5. Give it a name: "careeraxis"
+6. COPY the key (starts with sk-ant-)
+   ⚠️ Save it somewhere — you only see it once
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2 — CREATE GITHUB REPO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to github.com
+2. Click the "+" icon top right → "New repository"
+3. Name it: careeraxis
+4. Keep it PUBLIC
+5. Do NOT add README or .gitignore (uncheck those)
+6. Click "Create repository"
+7. GitHub shows you a page with commands — KEEP IT OPEN
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 3 — PUSH YOUR CODE TO GITHUB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Option A — Using Terminal (Mac/Linux/Git Bash):
+
+  1. Unzip the careeraxis-v4.zip file
+  2. Open Terminal
+  3. cd into the ca4 folder:
+       cd path/to/ca4
+  4. Run these commands ONE BY ONE:
+
+     git init
+     git add .
+     git commit -m "CareerAxis v4 launch"
+     git branch -M main
+     git remote add origin https://github.com/YOUR_USERNAME/careeraxis.git
+     git push -u origin main
+
+  Replace YOUR_USERNAME with your actual GitHub username.
+
+Option B — Using GitHub Desktop (easier):
+
+  1. Download GitHub Desktop: desktop.github.com
+  2. Sign in with your GitHub account
+  3. Click "Add an Existing Repository from your Hard Drive"
+  4. Select the ca4 folder
+  5. Click "Publish repository"
+  6. Make sure "Keep this code private" is UNCHECKED
+  7. Click Publish
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 4 — DEPLOY ON VERCEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to vercel.com
+2. Sign in with your GitHub account
+3. Click "Add New..." → "Project"
+4. Find your "careeraxis" repo → Click "Import"
+5. Vercel will detect it is a Vite project automatically
+6. DO NOT change any settings
+7. Click "Deploy"
+8. Wait about 60 seconds
+9. You will see "Congratulations! Your deployment is ready"
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 5 — ADD YOUR API KEY (VERY IMPORTANT)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Without this step the AI will not respond.
+
+1. In Vercel, click on your careeraxis project
+2. Click "Settings" tab at the top
+3. Click "Environment Variables" in the left menu
+4. Fill in:
+     Name:  ANTHROPIC_API_KEY
+     Value: sk-ant-xxxx (paste your real key from Step 1)
+5. Click "Save"
+6. Click "Deployments" tab
+7. Click the three dots (...) next to the latest deployment
+8. Click "Redeploy"
+9. Wait 60 seconds again
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 6 — YOUR SITE IS LIVE!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Vercel gives you a free URL like:
+  https://careeraxis.vercel.app
+  or
+  https://careeraxis-xyz.vercel.app
+
+Share that link. Anyone can open it. No login needed.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CUSTOM DOMAIN (OPTIONAL - careeraxis.in)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Buy careeraxis.in from GoDaddy or Namecheap (~₹800/yr)
+2. In Vercel → your project → Settings → Domains
+3. Click "Add Domain" → type careeraxis.in → Add
+4. Copy the DNS records Vercel gives you
+5. Go to your domain registrar → DNS settings
+6. Add those records
+7. Wait 10-30 minutes → site is live on your domain
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IF SOMETHING GOES WRONG
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Site shows blank white page:
+  → Check browser console (F12 → Console tab) for errors
+
+AI is not responding:
+  → You forgot Step 5 — add ANTHROPIC_API_KEY and redeploy
+
+Build failed on Vercel:
+  → Make sure you uploaded the ca4 folder contents correctly
+  → The index.html must be at the ROOT of the folder
+  → The src/ folder must be INSIDE ca4/
+
+Voice not working:
+  → Use Google Chrome browser
+  → Browser will ask for microphone permission — click Allow
+
+Need help:
+  → Message Gourang on LinkedIn
+    linkedin.com/in/gourang-baviskar
+
+╔══════════════════════════════════════════════════════╗
+║  Total cost: $0 (Vercel free plan + Anthropic credits)║
+║  Site is LIVE forever on the free tier.              ║
+╚══════════════════════════════════════════════════════╝
