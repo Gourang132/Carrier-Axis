@@ -106,10 +106,10 @@ Give a sharp, specific roadmap:
 Zero fluff. Be the trusted mentor who tells hard truths.`,
 };
 
-/* ─── CLAUDE ──────────────────────────────────────────────────────────────── */
+/* ─── API CALL ────────────────────────────────────────────────────────────── */
 async function ask(messages, role, modeId, resumeText) {
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -460,8 +460,6 @@ function ChatView({ mode, role, onBack }) {
     setTimeout(() => tts(r), 200);
     inpRef.current?.focus();
   };
-
-  const uc = msgs.filter(m => m.role === "user").length;
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column", fontFamily: "Outfit,sans-serif" }}>
