@@ -69,11 +69,11 @@ Give exact counter-offer scripts with specific numbers. Be tactical and energeti
 `You are an expert ATS resume consultant for ${role} roles.
 ${rt ? `The user uploaded their resume:\n\n${rt}\n\nAudit it now.` : "Ask the user to upload or paste their resume content to get started."}
 Structure your response as:
-📊 ATS Score: X/100
-🔑 Missing Keywords: [list exact terms]
-✏️ Rewrites — BEFORE: [original] → AFTER: [improved] for each weak bullet
-🚩 Red Flags: [list]
-Be specific and ruthless. No generic advice.`,
+📊 ATS Score: [Give a REAL calculated score between 40–95 based on actual resume content. Analyse keyword density, formatting, action verbs, quantified achievements, and role alignment. Every resume must get a unique and accurate score — do NOT default to 72 or any fixed number.]
+🔑 Missing Keywords: [list exact missing terms relevant to ${role} roles]
+✏️ Rewrites — BEFORE: [original bullet] → AFTER: [improved bullet] for each weak bullet
+🚩 Red Flags: [list specific issues found]
+Be specific and ruthless. No generic advice. Base everything on what is actually in the resume.`,
 
   career: (role) =>
 `You are an elite data career strategist for ${role} professionals targeting India, Dubai, Singapore.
@@ -181,7 +181,7 @@ function DropZone({ onFile }) {
         border: `2px dashed ${over ? "#C8922A" : "rgba(200,146,42,0.25)"}`,
         borderRadius: 12, padding: "32px 24px", textAlign: "center", cursor: "pointer",
         background: over ? "rgba(200,146,42,0.08)" : "rgba(200,146,42,0.03)",
-        transition: "all 0.2s ease", marginBottom: 24,
+        transition: "all 0.2s ease", marginBottom: 16,
       }}
     >
       <input ref={ref} type="file" accept=".txt,.pdf,.doc,.docx" style={{ display: "none" }} onChange={(e) => read(e.target.files[0])} />
@@ -329,8 +329,6 @@ function RolePicker({ mode, onPick, onBack }) {
   const [sel, setSel] = useState(null);
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 20px", fontFamily: "Outfit,sans-serif" }}>
-
-      {/* FIXED back button — always visible */}
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "16px 24px", background: "rgba(8,8,8,0.95)", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center" }}>
         <button onClick={onBack} style={{ background: "rgba(200,146,42,0.1)", border: "1px solid rgba(200,146,42,0.3)", color: "#C8922A", cursor: "pointer", fontSize: 14, fontFamily: "Outfit,sans-serif", display: "flex", alignItems: "center", gap: 6, padding: "8px 20px", borderRadius: 8, fontWeight: 600 }}>
           ← Back to Home
@@ -341,7 +339,6 @@ function RolePicker({ mode, onPick, onBack }) {
         <div style={{ fontSize: 48, marginBottom: 18, textAlign: "center" }}>{mode.emoji}</div>
         <h2 style={{ fontFamily: "Fraunces,Georgia,serif", fontSize: "clamp(28px,4vw,40px)", fontWeight: 700, color: "#F2EEE6", marginBottom: 12, textAlign: "center", letterSpacing: -0.5 }}>{mode.label}</h2>
         <p style={{ color: "#5a4a2a", fontSize: 16, marginBottom: 52, textAlign: "center", maxWidth: 500, lineHeight: 1.8 }}>{mode.desc}</p>
-
         <p style={{ color: "#4a3a1a", fontSize: 13, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", marginBottom: 24, textAlign: "center" }}>Select your target role</p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 16, maxWidth: 560, width: "100%", marginBottom: 40 }}>
@@ -369,11 +366,12 @@ function RolePicker({ mode, onPick, onBack }) {
 
 /* ─── CHAT VIEW ───────────────────────────────────────────────────────────── */
 function ChatView({ mode, role, onBack }) {
-  const [msgs, setMsgs]     = useState([]);
-  const [inp, setInp]       = useState("");
-  const [busy, setBusy]     = useState(false);
-  const [resume, setResume] = useState("");
-  const [vname, setVname]   = useState("loading…");
+  const [msgs, setMsgs]         = useState([]);
+  const [inp, setInp]           = useState("");
+  const [busy, setBusy]         = useState(false);
+  const [resume, setResume]     = useState("");
+  const [showDrop, setShowDrop] = useState(true);
+  const [vname, setVname]       = useState("loading…");
   const endRef   = useRef(null);
   const inpRef   = useRef(null);
 
@@ -424,8 +422,19 @@ function ChatView({ mode, role, onBack }) {
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", padding: "28px 28px", maxWidth: 900, margin: "0 auto", width: "100%" }}>
-        {mode.id === "resume" && msgs.length <= 1 && (
-          <DropZone onFile={(text, name) => { setResume(text); send(`I uploaded my resume: ${name}. Please audit it now.`); }} />
+        {mode.id === "resume" && showDrop && (
+          <DropZone onFile={(text, name) => {
+            setResume(text);
+            setShowDrop(false);
+            send(`I uploaded my resume: ${name}. Please audit it now.`);
+          }} />
+        )}
+        {mode.id === "resume" && !showDrop && (
+          <div style={{ textAlign: "center", marginBottom: 20 }}>
+            <button onClick={() => setShowDrop(true)} style={{ background: "rgba(200,146,42,0.1)", border: "1px solid rgba(200,146,42,0.3)", color: "#C8922A", borderRadius: 8, padding: "9px 22px", cursor: "pointer", fontFamily: "Outfit,sans-serif", fontSize: 13, fontWeight: 600 }}>
+              📂 Upload a different resume
+            </button>
+          </div>
         )}
         {msgs.map((m, i) => <Msg key={i} m={m} />)}
         {busy && <Dots />}
@@ -440,7 +449,7 @@ function ChatView({ mode, role, onBack }) {
             value={inp}
             onChange={e => setInp(e.target.value)}
             onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
-            placeholder={mode.id === "resume" ? "Ask about your resume, or drop a file above…" : "Type your answer, or tap mic to speak…"}
+            placeholder={mode.id === "resume" ? "Ask about your resume, or upload a file above…" : "Type your answer, or tap mic to speak…"}
             rows={1}
             style={{ flex: 1, background: "none", border: "none", color: "#F2EEE6", fontSize: 15, lineHeight: 1.7, fontFamily: "Outfit,sans-serif", maxHeight: 120, overflowY: "auto", fontWeight: 400 }}
             onInput={e => { e.target.style.height = "auto"; e.target.style.height = Math.min(e.target.scrollHeight, 120) + "px"; }}
